@@ -1,0 +1,37 @@
+frontend prompt - 
+Based on the below implementation plan i want you to design a rough UI that will be connecting with the backend apis for usability, we dont have the schema models or apis implemented as of now so have the mock UI ready with the components for uploading a sample text paste JD and running the worklfow and displaying the workflow progress and after that loading the results in a tabular format on the UI which we should be able to easily integrate with the backend apis when they are available.
+Do not implement mock data in the frontend itself, add the proper design for the table and user flow for the JD to profile results display.
+
+
+
+Backend prompt - 
+1 . We are designing an Hiring ai tool that helps b2b talent aquisition teams in their workflow of finding the right candidate. You are a senior architect designing this system to help the users in uploading their rough JD, given the option refining it and extracting the relevant keywords and requirements from the JD and running a research pipeline which uses mock github/naukari third party job platform apis or uses google search to organically find the right candidate profiles through linkedin or any other platform, after we have those results in a structured format we would reranking them based on the ATS score we have given any of the platform response could have given use resume or just information on skills and certificates the scoring system may use a hybrid logic of deterministic patterns and ranking algo or using the llm to give it a summarized description of the requirements from the JD and the user profile to get a final score and reasoning and confidence of why a particular profile gets that matching score etc.
+I want you to first understand the requirement and design the entities and give me an mermaid diagram of how will this particular workflow will work, dont care about complex patterns or reliability initially just a worklfow that will consuming this requirement and the entities correctly executing and storing those results for an user to view.
+
+2. This design in approved, can you share me the schema of the models defined
+
+3. Can you spin up a fastapi server where we will implementing this
+Implement the async workflow as user executes the api this workflow should be scheduled and executed
+use postgres for the storage and these entities and create the indexes for those and implement the on server start migration run logic with alembic so we are tracking the schema updations
+Define the api request response models and the models for the mock data responses from the vendors
+Create a plan for this first before implementing
+
+4. Please include temporal and the workflow should be implemented in that , create activities which can be shared by any new worklfow, amnage the extensibility of the functions/ utils being created and the generic activities in temporal and the heartbeats of the activities to be implemented as per the mock activity/provider logic could behave in a real scenario.
+Create the docker compose for this plan where we could have the fastapi, postgres, temporal servers spin up and the env file for the credentials to be consumed from the .env file rather than the docker compose inline env defined
+
+
+Final calibration - 
+This is my assumed product design, can you go through this and idenitfy the shortcomings 
+User uploads a JD 
+Parsing of JD and extraction of keywords
+User hits research - Research workflow executed/starts
+ResearchPotentialCandidatesWorkflow
+- Pull the JD keywords from storage
+- Create search queries for google with different keywords
+- Dedicated platforms like internal DB/github/linkedin/naukari
+- If any platform provides apis/system to query over the candidate skills and experience and certificates then a structured response available
+- If not then a scraper to get the google search results pages scraped  -> predefined schema -> change in schema -> use AI to validate/fix the schema or raise exception to developer
+- After getting the structured responses normalize and validate for potential faulty profiles
+- Run a ranking logic on top of the available profiles to rank by the keywords
+ 
+Do not make any changes only tell me the gaps in current implementation and the above design
